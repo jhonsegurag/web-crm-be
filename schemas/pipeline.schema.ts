@@ -1,0 +1,4 @@
+import { z } from 'zod';
+export const stageSchema = z.object({ name: z.string().min(1), color: z.string().optional(), position: z.number().int().default(0), isClosed: z.boolean().default(false), isWon: z.boolean().default(false) });
+export const dealSchema = z.object({ stageId: z.string().uuid(), contactId: z.string().uuid().optional(), title: z.string().min(1), value: z.number().min(0).default(0), currency: z.string().default('USD'), probability: z.number().min(0).max(100).default(50), expectedCloseDate: z.iso.datetime().transform(v => new Date(v)).optional(), assignedTo: z.string().uuid().optional(), notes: z.string().optional(), tags: z.array(z.string()).optional(), position: z.number().int().default(0), orderId: z.string().uuid().optional() });
+export const moveDealSchema = z.object({ stageId: z.string().uuid(), position: z.number().int().min(0) });

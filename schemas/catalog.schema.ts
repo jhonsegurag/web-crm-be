@@ -1,0 +1,3 @@
+import { z } from 'zod';
+export const categorySchema = z.object({ name: z.string().min(1), description: z.string().optional(), parentId: z.string().uuid().optional() });
+export const productSchema = z.object({ categoryId: z.string().uuid().optional(), name: z.string().min(1), description: z.string().optional(), sku: z.string().optional(), price: z.number().min(0), cost: z.number().optional(), type: z.enum(['product', 'service']).default('product'), unit: z.string().default('unit'), stock: z.number().int().optional(), isActive: z.boolean().default(true), images: z.array(z.string()).optional() });

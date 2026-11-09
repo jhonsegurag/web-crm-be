@@ -1,0 +1,2 @@
+import { z } from 'zod';
+export const agentConfigSchema = z.object({ name: z.string().optional(), provider: z.enum(['openai', 'anthropic', 'groq', 'custom']).optional(), model: z.string().optional(), systemPrompt: z.string().optional(), temperature: z.number().min(0).max(2).optional(), maxTokens: z.number().int().optional(), isActive: z.boolean().optional(), webhookUrl: z.string().optional(), configJson: z.record(z.string(), z.unknown()).optional() });

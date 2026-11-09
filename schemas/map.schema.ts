@@ -1,0 +1,4 @@
+import { z } from 'zod';
+export const floorSchema = z.object({ locationId: z.string().uuid().optional(), name: z.string().min(1), level: z.number().int().default(0), widthPx: z.number().int().default(1200), heightPx: z.number().int().default(800), backgroundUrl: z.string().optional() });
+export const roomSchema = z.object({ name: z.string().min(1), x: z.number(), y: z.number(), width: z.number(), height: z.number(), color: z.string().optional() });
+export const tableSchema = z.object({ roomId: z.string().uuid().optional(), label: z.string().min(1), capacity: z.number().int().default(4), shape: z.enum(['rect', 'circle']).default('rect'), x: z.number(), y: z.number(), width: z.number().default(60), height: z.number().default(60), status: z.enum(['available', 'occupied', 'reserved', 'inactive']).optional() });

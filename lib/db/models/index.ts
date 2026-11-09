@@ -1,0 +1,82 @@
+import { Role } from './role.model';
+import { Business } from './business.model';
+import { User } from './user.model';
+import { Location } from './location.model';
+import { Contact } from './contact.model';
+import { ContactNote } from './contact-note.model';
+import { Conversation } from './conversation.model';
+import { Message } from './message.model';
+import { PipelineStage } from './pipeline-stage.model';
+import { Deal } from './deal.model';
+import { CatalogCategory } from './catalog-category.model';
+import { Product } from './product.model';
+import { Floor } from './floor.model';
+import { Room } from './room.model';
+import { Table } from './table.model';
+import { Order } from './order.model';
+import { OrderItem } from './order-item.model';
+import { Appointment } from './appointment.model';
+import { AgentConfig } from './agent-config.model';
+import { AgentLog } from './agent-log.model';
+import { FeatureFlag } from './feature-flag.model';
+import { Integration } from './integration.model';
+
+Business.hasMany(Location, { foreignKey: 'businessId', as: 'locations' });
+Location.belongsTo(Business, { foreignKey: 'businessId' });
+Business.hasMany(User, { foreignKey: 'businessId', as: 'users' });
+User.belongsTo(Business, { foreignKey: 'businessId' });
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
+Role.hasMany(User, { foreignKey: 'roleId' });
+Business.hasMany(Contact, { foreignKey: 'businessId', as: 'contacts' });
+Contact.belongsTo(Business, { foreignKey: 'businessId' });
+Contact.hasMany(ContactNote, { foreignKey: 'contactId', as: 'notes' });
+ContactNote.belongsTo(Contact, { foreignKey: 'contactId' });
+Business.hasMany(Conversation, { foreignKey: 'businessId', as: 'conversations' });
+Conversation.belongsTo(Business, { foreignKey: 'businessId' });
+Conversation.belongsTo(Contact, { foreignKey: 'contactId', as: 'contact' });
+Contact.hasMany(Conversation, { foreignKey: 'contactId' });
+Conversation.hasMany(Message, { foreignKey: 'conversationId', as: 'messages' });
+Message.belongsTo(Conversation, { foreignKey: 'conversationId' });
+Business.hasMany(PipelineStage, { foreignKey: 'businessId', as: 'stages' });
+PipelineStage.belongsTo(Business, { foreignKey: 'businessId' });
+PipelineStage.hasMany(Deal, { foreignKey: 'stageId', as: 'deals' });
+Deal.belongsTo(PipelineStage, { foreignKey: 'stageId', as: 'stage' });
+Deal.belongsTo(Contact, { foreignKey: 'contactId', as: 'contact' });
+Contact.hasMany(Deal, { foreignKey: 'contactId' });
+Business.hasMany(CatalogCategory, { foreignKey: 'businessId', as: 'categories' });
+CatalogCategory.belongsTo(Business, { foreignKey: 'businessId' });
+CatalogCategory.hasMany(CatalogCategory, { foreignKey: 'parentId', as: 'children' });
+CatalogCategory.belongsTo(CatalogCategory, { foreignKey: 'parentId', as: 'parent' });
+CatalogCategory.hasMany(Product, { foreignKey: 'categoryId', as: 'products' });
+Product.belongsTo(CatalogCategory, { foreignKey: 'categoryId', as: 'category' });
+Business.hasMany(Floor, { foreignKey: 'businessId', as: 'floors' });
+Floor.belongsTo(Business, { foreignKey: 'businessId' });
+Floor.hasMany(Room, { foreignKey: 'floorId', as: 'rooms' });
+Room.belongsTo(Floor, { foreignKey: 'floorId' });
+Floor.hasMany(Table, { foreignKey: 'floorId', as: 'tables' });
+Table.belongsTo(Floor, { foreignKey: 'floorId' });
+Room.hasMany(Table, { foreignKey: 'roomId', as: 'tables' });
+Table.belongsTo(Room, { foreignKey: 'roomId', as: 'room' });
+Business.hasMany(Order, { foreignKey: 'businessId', as: 'orders' });
+Order.belongsTo(Business, { foreignKey: 'businessId' });
+Order.belongsTo(Contact, { foreignKey: 'contactId', as: 'contact' });
+Order.belongsTo(Table, { foreignKey: 'tableId', as: 'table' });
+Order.hasMany(OrderItem, { foreignKey: 'orderId', as: 'items' });
+OrderItem.belongsTo(Order, { foreignKey: 'orderId' });
+OrderItem.belongsTo(Product, { foreignKey: 'productId', as: 'product' });
+Business.hasMany(Appointment, { foreignKey: 'businessId', as: 'appointments' });
+Appointment.belongsTo(Business, { foreignKey: 'businessId' });
+Appointment.belongsTo(Contact, { foreignKey: 'contactId', as: 'contact' });
+Business.hasMany(AgentConfig, { foreignKey: 'businessId', as: 'agentConfigs' });
+AgentConfig.belongsTo(Business, { foreignKey: 'businessId' });
+AgentConfig.hasMany(AgentLog, { foreignKey: 'agentConfigId', as: 'logs' });
+AgentLog.belongsTo(AgentConfig, { foreignKey: 'agentConfigId' });
+Business.hasMany(FeatureFlag, { foreignKey: 'businessId', as: 'featureFlags' });
+Business.hasMany(Integration, { foreignKey: 'businessId', as: 'integrations' });
+
+export {
+  Role, Business, User, Location, Contact, ContactNote,
+  Conversation, Message, PipelineStage, Deal, CatalogCategory,
+  Product, Floor, Room, Table, Order, OrderItem, Appointment,
+  AgentConfig, AgentLog, FeatureFlag, Integration,
+};

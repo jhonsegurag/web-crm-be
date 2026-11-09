@@ -1,0 +1,2 @@
+import { z } from 'zod';
+export const appointmentSchema = z.object({ contactId: z.string().uuid().optional(), assignedTo: z.string().uuid(), title: z.string().min(1), description: z.string().optional(), startsAt: z.iso.datetime().transform(v => new Date(v)), endsAt: z.iso.datetime().transform(v => new Date(v)), locationText: z.string().optional(), status: z.enum(['scheduled', 'confirmed', 'in_progress', 'completed', 'cancelled', 'no_show']).default('scheduled'), reminderMinutes: z.number().int().default(30) });
