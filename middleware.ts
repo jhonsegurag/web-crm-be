@@ -36,6 +36,17 @@ export async function middleware(req: NextRequest) {
     return withCors(NextResponse.next());
   }
 
+  const PUBLIC_ROUTES = [
+    { path: '/api/waitlist/status', methods: '*' as const },
+    { path: '/api/waitlist',        methods: ['POST'] },
+  ];
+  const isPublicRoute = PUBLIC_ROUTES.some((r) => {
+    const pathMatches = pathname === r.path || pathname.startsWith(r.path + '/');
+    const methodMatches = r.methods === '*' || r.methods.includes(req.method);
+    return pathMatches && methodMatches;
+  });
+  if (isPublicRoute) return withCors(NextResponse.next());
+
   const authHeader = req.headers.get('authorization') ?? '';
   if (!authHeader?.startsWith("Bearer ")) {
     return withCors(NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 }));

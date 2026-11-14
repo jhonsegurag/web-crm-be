@@ -20,6 +20,7 @@ import { AgentConfig } from './agent-config.model';
 import { AgentLog } from './agent-log.model';
 import { FeatureFlag } from './feature-flag.model';
 import { Integration } from './integration.model';
+import { Waitlist } from './waitlist.model';
 
 Business.hasMany(Location, { foreignKey: 'businessId', as: 'locations' });
 Location.belongsTo(Business, { foreignKey: 'businessId' });
@@ -79,4 +80,5 @@ export {
   Conversation, Message, PipelineStage, Deal, CatalogCategory,
   Product, Floor, Room, Table, Order, OrderItem, Appointment,
   AgentConfig, AgentLog, FeatureFlag, Integration,
+  Waitlist,
 };
